@@ -47,6 +47,10 @@ const tokenValues ={
 
 export default function Home() {
   const [loginDetail, setLoginDetail] = useState(initialFieldValues);
+  const [currentPage, setCurrentPage] = useState(null);
+  const [currentIndex, setCurrentIndex] = useState(-1);
+
+
   /*
   const [tokenInfo , setTokenInfo] = useState(tokenValues);
 
@@ -84,10 +88,18 @@ export default function Home() {
 
         }
 
+    const refreshPage = () =>{
+
+        setCurrentPage(null);
+        setCurrentIndex(-1);
+    }
+
 
 
       const handleSubmit = (event) => {
         event.preventDefault();
+         alert("logins submitted");
+
         const data = {
           username: loginDetail.username,
           password: loginDetail.password,
@@ -100,9 +112,15 @@ export default function Home() {
             return response.data;
 
             */
+
             localStorage.setItem("user", JSON.stringify(response.data));
             //setTokenInfo(response.data);
-            console.log(response)
+            const isAdmin = JSON.parse(atob(response.data.split('.')[1])).roles[0] === 'ROLE_MOTORIST';
+            console.log(isAdmin);
+            console.log(response);
+            refreshPage();
+
+            window.location.reload(true);
            const retrievedPerson = JSON.parse(localStorage.getItem('user'));
             console.log(retrievedPerson);
         })

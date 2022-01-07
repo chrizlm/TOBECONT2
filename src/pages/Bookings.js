@@ -67,9 +67,10 @@ export default function Bookings(props) {
   const [locationData, setLocationData] = useState([]);
   const [parkingLotData, setParkingLotData] = useState([]);
   const [searchParkingLot, setSearchParkingLot] = useState("");
+  const [freeSpace, setFreeSpace] = useState(0);
 
 
-useEffect(() =>{
+  useEffect(() =>{
   retrieveAllParkingLotsAreaData();
 }, []);
 
@@ -164,7 +165,7 @@ const handleDateChange = (date) =>{
 
 
   const saveParkingDetail = () =>{
-    var data ={
+    const data ={
       numberPlate: parkDetail.numberPlate,
       vehicleType: parkDetail.vehicleType,
       location: parkDetail.location,
@@ -204,6 +205,19 @@ const handleDateChange = (date) =>{
   }
 
 
+
+/*
+  const handleAvailableSpaces = (parkingLotName) =>{
+    DataService.getFreeSpace(parkingLotName).then(response =>{
+      console.log(response);
+      setFreeSpace(response.data)
+
+
+    }).catch(error =>{
+      console.log(error)
+    })
+  }
+  */
 
 
 
@@ -414,13 +428,18 @@ const handleDateChange = (date) =>{
                 totalParkingSpaces
               </TableCell>
               <TableCell>
+                AvailableSpaces
+              </TableCell>
+              <TableCell>
                 Book
               </TableCell>
 
             </TableRow>
           </TableHead>
           <TableBody>
-            {parkLot.map((park) =>(
+            {
+              parkLot.map((park) =>(
+
                 <TableRow
                 hover
                 key={park.parkingLotId}
@@ -434,6 +453,16 @@ const handleDateChange = (date) =>{
                   <TableCell>
                     {park.totalParkingSpaces}
                   </TableCell>
+                  <TableCell>
+                    {park.availableSpace}
+                  </TableCell>
+
+                  <TableCell>
+
+                  </TableCell>
+
+
+
                   <TableCell>
                     <Button>Book</Button>
                   </TableCell>
@@ -468,112 +497,3 @@ const handleDateChange = (date) =>{
 
 
 
-
-/*
-  const algorithm = [
-    "Searching Algorithm",
-    "Sorting Algorithm",
-    "Graph Algorithm",
-  ];
-  const MOMBASAROAD = ["C++", "Java", "COOLMBS", "C#"];
-  const KAREN = ["Arrays", "LinkedList", "Stack", "Queue", "KAREN CAR PARK"];
-
-
-  let type = null;
-
-
-  let options = null;
-
-
-
-
-
-  if (selected === "Algorithm") {
-    type = algorithm;
-  } else if (selected === "MOMBASAROAD") {
-    type = MOMBASAROAD;
-  } else if (selected === "KAREN") {
-    type = KAREN;
-  }
-
-
-  if (type) {
-    options = type.map((el) => (<MenuItem key={el} value={el}>{el}</MenuItem>));
-  }
-
- */
-
-
-/*
- useEffect(() => {
-   async function getData() {
-
-     await axios
-         .get(`http://localhost:8080/apiv1/parkingLot/get`, {
-           params: "KA001"
-         })
-         .then((response) => {
-           console.log(response.data);
-           return setData(response.data);
-
-         });
-   }
- });
-
- */
-
-
-
-/*
-<!--
-          <Autocomplete
-              onChange={(_, locationData) => getPkLotList()}
-              options={locationData}
-              renderInput={(params) => (
-                  <TextField {...params} label="Location" variant="outlined" />
-              )}
-          />
-
-          <Autocomplete
-              onChange={handleInputChange}
-              key={parkingLotData}
-              options={parkingLotData}
-              renderInput={(params) => (
-                  <TextField {...params} label="Parking Lots" variant="outlined" />
-              )}
-          />
-
-            -->
- */
-
-/*
-<!--
-          <FormControl fullWidth>
-          <InputLabel id="dependant-dropdown">location</InputLabel>
-          <Select
-              labelId="dependant-dropdown"
-              id="dependant-dropdown"
-              name="location"
-              value={parkDetail.location}
-              label="Location"
-              onChange={handleOptionOne}
-          >
-            <MenuItem value='Choose...'>Choose...</MenuItem>
-            <MenuItem value='Algorithm'>Algorithm</MenuItem>
-            <MenuItem value='MOMBASAROAD'>MOMBASAROAD</MenuItem>
-            <MenuItem value='KAREN'>KAREN</MenuItem>
-          </Select>
-        </FormControl>
-        <FormControl>
-          <InputLabel id="dropdown">Park Lot</InputLabel>
-          <Select
-              labelId="dropdown"
-              id="dropdown"
-              name="parkingLotName"
-              value={parkDetail.parkingLotName}
-              label="Park Lot"
-              onChange={handleOptionTwo}>{options}</Select>
-        </FormControl>
-
-        -->
- */

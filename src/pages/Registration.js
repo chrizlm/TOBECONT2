@@ -117,6 +117,9 @@ import FormControl from '@mui/material/FormControl';
 import React from 'react';
 import axios from "axios";
 import AppUserService from "../service/AppUserService";
+import MotoristService from "../service/MotoristService";
+import {useState, useEffect} from "react";
+import TextField from "@mui/material/TextField";
 
 
 const useStyles = makeStyles({
@@ -145,39 +148,42 @@ const initialFieldValues = {
 
 };
 
-export default function Registration(props) {
-    const validate =(fieldValues = values) =>{
-        let temp = {...errors}
-        if('firstName' in fieldValues)
-            temp.firstName = fieldValues.firstName?"":"This field is required."
-        if('email' in fieldValues)
-            temp.email = (/$^|.+@.+..+/).test(fieldValues.email) ?"":"Invalid Email."
-        setErrors({
-            ...temp
+
+
+export default function Registration(){
+    const [motoristDetail, setMotoristDetail] =useState(initialFieldValues);
+
+    const handleInputChange = e =>{
+
+        const {name, value} = e.target
+        setMotoristDetail({
+            ...motoristDetail,
+            [name]: value,
         })
-
-        if(fieldValues === values)
-            return Object.values(temp).every(x => x === "")
     }
 
 
-    const handleSubmit = e =>{
-        e.preventDefault()
+    const handleSubmit = (event) =>{
+        event.preventDefault();
+        const data = {
+            //id: motoristDetail.id,
+            firstName: motoristDetail.firstName,
+            lastName: motoristDetail.lastName,
+            email: motoristDetail.email,
+            gender: motoristDetail.gender,
+            password: motoristDetail.password,
+        }
 
-        AppUserService.register(values)
-           .then(response => {
-             console.log(response)
-           })
-           .catch(error => {
-             console.log(error)
-           })
-
-    }
+        MotoristService.registerMotorist(data).then(response =>{
+            console.log(response);
+        }).catch(error =>{
+            console.log(error)
+        });
+    };
 
     const classes = useStyles();
-    const { values, setValues, resetForm, handleInputChange, errors, setErrors } = UseForm(initialFieldValues, true, validate);
 
-    return (
+    return(
         <>
             <Box
                 sx={{
@@ -199,23 +205,21 @@ export default function Registration(props) {
                                     variant="outlined"
                                     label="First Name"
                                     name="firstName"
-                                    value={values.firstName}
+                                    value={motoristDetail.firstName}
                                     onChange={handleInputChange}
-                                    error={errors.firstName}
                                 />
                                 <Controls.Input
                                     variant="outlined"
                                     label="Last Name"
                                     name="lastName"
-                                    value={values.lastName}
+                                    value={motoristDetail.lastName}
                                     onChange={handleInputChange}
                                 />
                                 <Controls.Input
                                     variant="outlined"
                                     label="Email"
                                     name="email"
-                                    value={values.email}
-                                    error={errors.email}
+                                    value={motoristDetail.email}
                                     onChange={handleInputChange}
                                 />
 
@@ -226,16 +230,21 @@ export default function Registration(props) {
                                     name="gender"
                                     label="Gender"
                                     color="primary"
-                                    value={values.gender}
+                                    value={motoristDetail.gender}
                                     genderItems={genderItems}
                                     onChange={handleInputChange}
                                 />
-                                <Controls.Input
-                                    variant="outlined"
-                                    label="Password"
+
+                                <TextField
+                                    margin="normal"
+                                    required
+                                    fullWidth
                                     name="password"
-                                    value={values.password}
+                                    label="Password"
+                                    type="password"
+                                    value={motoristDetail.password}
                                     onChange={handleInputChange}
+                                    autoComplete="current-password"
                                 />
 
                             </Grid>
@@ -250,6 +259,3 @@ export default function Registration(props) {
         </>
     )
 }
-
-
-

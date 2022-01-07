@@ -12,27 +12,37 @@ export const AttendantSideMenu = [
         className: 'nav-text'
     },
     {
-        title: 'Registration',
-        path: '/registration',
-        icon: <AiIcons.AiOutlineBook />,
-        className: 'nav-text'
-    },
-    {
         title: 'ParkingLot',
         path: '/parkingLot',
         icon: <AiIcons.AiOutlineBook />,
         className: 'nav-text'
     },
     {
-        title: 'ParkingTable',
-        path: '/pTable',
+        title: 'About',
+        path: '/about',
+        icon: <AiIcons.AiFillProfile />,
+        className: 'nav-text'
+    },
+    {
+        title: 'Support',
+        path: '/support',
+        icon: <MdIcons.MdHelp />,
+        className: 'nav-text'
+    },
+    {
+        title: 'ParkingLotDetails',
+        path: '/parkingLotsDetails',
         icon: <AiIcons.AiOutlineBook />,
         className: 'nav-text'
     },
     {
-        title: 'Motorist',
-        path: '/Motorist',
+        title: 'BookingDetails',
+        path: '/bookingDetails',
         icon: <AiIcons.AiOutlineBook />,
         className: 'nav-text'
     }
+
+
+    //booking details
+    //parkinglot details
 ]

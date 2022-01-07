@@ -1,8 +1,7 @@
 import http from "./http-common"
-import authHeader from "./auth-header";
 
 const getAll = () => {
-    return http.get("/apiv1/parkingLot/all", { headers: authHeader() });
+    return http.get("/apiv1/parkingLot/all");
 };
 
 const get = parkinglocation => {

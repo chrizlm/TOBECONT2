@@ -6,11 +6,14 @@ import Bookings from "./Bookings";
 import About from "./About";
 import Support from "./Support";
 import Registration from './Registration';
+import AttendantRegistration from "./AttendantRegistration";
 import ParkingLot from "./ParkingLot";
 import PTable from "./PTable";
-import Motorist from "./Motorist";
 import GuardedRoute from "../components/GuardedRoute";
 import AuthService from "../service/auth.service";
+import ParkingLotDetails from "./ParkingLotDetails";
+import AttendantPage from "./AttendantPage";
+import BookingDetails from "./BookingDetails";
 
 export default function MotoristPage() {
   const[isAutheticated, setisAutheticated] = useState(false);
@@ -23,12 +26,14 @@ export default function MotoristPage() {
         <Switch>
           <Route exact path="/" component={Home}></Route>
           <Route exact path="/booking" component={Bookings}></Route>
+          <Route exact path="/bookingDetails" component={BookingDetails}></Route>
           <Route exact path="/about" component={About}></Route>
           <Route exact path="/support" component={Support}></Route>
           <Route exact path="/registration" component={Registration}></Route>
+          <Route exact path="/attendantRegistration" component={AttendantRegistration}></Route>
           <Route exact path="/parkingLot" component={ParkingLot}></Route>
-          <Route exact path="/pTable" component={PTable}></Route>
-          <Route exact path="/motorist" component={Motorist}></Route>
+          <Route exact path="/parkingLotsDetails" component={ParkingLotDetails}></Route>
+          <Route exact path="/attendantsList" component={AttendantPage}></Route>
         </Switch>
       </Router>
     </>

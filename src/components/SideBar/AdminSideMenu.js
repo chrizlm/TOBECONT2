@@ -30,6 +30,12 @@ export const AdminSideMenu = [
         className: 'nav-text'
     },
     {
+        title: 'AttendantRegistration',
+        path: '/attendantRegistration',
+        icon: <AiIcons.AiOutlineBook />,
+        className: 'nav-text'
+    },
+    {
         title: 'Registration',
         path: '/registration',
         icon: <AiIcons.AiOutlineBook />,
@@ -42,14 +48,20 @@ export const AdminSideMenu = [
         className: 'nav-text'
     },
     {
-        title: 'ParkingTable',
-        path: '/pTable',
+        title: 'ParkingLotDetails',
+        path: '/parkingLotsDetails',
         icon: <AiIcons.AiOutlineBook />,
         className: 'nav-text'
     },
     {
-        title: 'Motorist',
-        path: '/Motorist',
+        title: 'AttendantsList',
+        path: '/attendantsList',
+        icon: <AiIcons.AiOutlineBook />,
+        className: 'nav-text'
+    },
+    {
+        title: 'BookingDetails',
+        path: '/bookingDetails',
         icon: <AiIcons.AiOutlineBook />,
         className: 'nav-text'
     }

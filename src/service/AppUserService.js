@@ -2,6 +2,7 @@ import  axios from "axios";
 import qs from 'qs';
 
 import http from "./http-common"
+
 import authHeader from "./auth-header";
 
 const sendHeader ={
@@ -28,9 +29,11 @@ const login = data => {
     return http.post("/apiv1/appUser/login", data);
 };
 
-const register = data =>{
-    return http.post("/apiv1/motorist/save", data);
+const refreshToken = () =>{
+    return http.get("/apiv1/appUser/token/refresh");
 }
+
+
 
 /*
  const options = {
@@ -46,5 +49,5 @@ const register = data =>{
 
 export default {
     login,
-    register,
+    refreshToken,
 };

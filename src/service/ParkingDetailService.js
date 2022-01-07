@@ -20,8 +20,8 @@ const update = (data) => {
     return http.put(`/apiv1/parkingdetails/update`, data);
 };
 
-const remove = id => {
-    return http.delete(`/apiv1/parkingdetails/${id}`);
+const remove = numberPlate => {
+    return http.delete(`/apiv1/parkingdetails/${numberPlate}`);
 };
 
 const removeAll = () => {
