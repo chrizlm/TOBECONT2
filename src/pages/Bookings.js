@@ -35,6 +35,7 @@ import ParkingLotService from "../service/ParkingLotService";
 import ParkingDetailService from "../service/ParkingDetailService";
 import DataService from "../service/DataService";
 import moment from "moment";
+import ParkingLotsWithDatesService from "../service/ParkingLotsWithDatesService";
 
 const useStyles = makeStyles({
   pageContent: {
@@ -57,10 +58,17 @@ const useStyles = makeStyles({
    
   };
 
+  const initialSearchDetailsValues = {
+      location: "",
+      parkingLotName: "",
+      parkingDate: "",
+  }
+
 
 
 export default function Bookings(props) {
   const [parkDetail, setParkDetail] = useState(initialFieldValues);
+  const [searchParkDetails, setSearchParkDetails] = useState(initialSearchDetailsValues);
   const [selected, setSelected] = React.useState("");
   const [value, setValue] = React.useState(new Date());
   const [parkLot, setParkLot] = React.useState([]);
@@ -107,13 +115,16 @@ export default function Bookings(props) {
 
 
 
+
   useEffect(() =>{
     retrieveAllParkingLots();
   }, []);
 
   const retrieveAllParkingLots = () =>{
+      const currentDate = Date.now();
+      const submittedDate = moment(currentDate).format('YYYY-MM-DD')
 
-    ParkingLotService.getAll().then(response => {
+      ParkingLotsWithDatesService.getByDateOnly(submittedDate).then(response => {
       setParkLot(response.data);
       console.log(response);
     }).catch(error => {
@@ -144,9 +155,21 @@ export default function Bookings(props) {
      const searchParkingLot = e.target.value;
      setSearchParkingLot(searchParkingLot);
 
-
-
    }
+
+    const handleOptionOneSearch = e =>{
+        const {name, value} = e.target
+        setSelected(value)
+        setSearchParkDetails({
+            ...searchParkDetails,
+            [name]: value,
+        })
+
+
+        const searchParkingLot = e.target.value;
+        setSearchParkingLot(searchParkingLot);
+
+    }
   const handleOptionTwo = e =>{
     const {name, value} = e.target
     setParkDetail({
@@ -154,6 +177,14 @@ export default function Bookings(props) {
       [name]: value,
     })
   }
+
+    const handleOptionTwoSearch = e =>{
+        const {name, value} = e.target
+        setSearchParkDetails({
+            ...searchParkDetails,
+            [name]: value,
+        })
+    }
 
 const handleDateChange = (date) =>{
     setParkDetail({
@@ -217,6 +248,26 @@ const handleDateChange = (date) =>{
           console.log(error)
         })
   }
+
+    const findParkingLotByLocationAndDate = () =>{
+        const submittedDate = moment(searchParkDetails.parkingDate).format('YYYY-MM-DD')
+        const data ={
+
+            location: searchParkDetails.location,
+            parkingLotName: searchParkDetails.parkingLotName,
+            parkingDate: submittedDate,
+
+        };
+
+        ParkingLotsWithDatesService.getParkingDataSearch(data).then(response => {
+            setParkLot(response.data);
+            console.log(response);
+            console.log(setParkLot);
+        })
+            .catch(error => {
+                console.log(error)
+            })
+    }
 
 
 
@@ -295,7 +346,6 @@ const handleDateChange = (date) =>{
             <DatePicker
                 label="Basic example"
                 value={value}
-                inputFormat={"yyyy-MM-dd"}
 
                 onChange={(date) => {
                   setValue(date);
@@ -316,7 +366,6 @@ const handleDateChange = (date) =>{
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <TimePicker
                 placeholder="Booking Time"
-                inputFormat={"HH:mm"}
                 value={value}
                 onChange={(date) => {
                   setValue(date);
@@ -401,21 +450,59 @@ const handleDateChange = (date) =>{
 
         <Form>
 
+
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <DatePicker
+                    label="Basic example"
+                    value={value}
+
+                    onChange={(date) => {
+                        setValue(date);
+
+                        setSearchParkDetails({
+                            ...parkDetail,
+                            parkingDate : date,
+                        })
+                    }}
+                    renderInput={(params) => <TextField {...params}
+                                                        name="parkingDate" value={searchParkDetails.parkingDate}
+                    />}
+                />
+            </LocalizationProvider>
+
+            <FormControl fullWidth>
+                <InputLabel id="dependant-dropdown">location</InputLabel>
+                <Select
+                    labelId="dependant-dropdown"
+                    id="dependant-dropdown"
+                    name="location"
+                    value={searchParkDetails.location}
+                    label="Location"
+                    onChange={handleOptionOneSearch}
+                >{locationData.map((item ,index) =>
+                    <MenuItem value={item} key={index}
+                              onClick={getPkLotList({item})}>{item}</MenuItem>)}
+                </Select>
+            </FormControl>
+            <FormControl>
+                <InputLabel id="dropdown">Park Lot</InputLabel>
+                <Select
+                    labelId="dropdown"
+                    id="dropdown"
+                    name="parkingLotName"
+                    value={searchParkDetails.parkingLotName}
+                    label="Park Lot"
+                    onChange={handleOptionTwoSearch}>{
+                    parkingLotData.map((item, index) =>
+                        <MenuItem value={item} key={index} >{item}</MenuItem> )
+                }</Select>
+            </FormControl>
+
           <FormControl fullWidth>
-            <InputLabel id="parkings">Find parking lots</InputLabel>
-            <Select
-                labelId="parkings"
-                id="parkings"
-                name="location"
-                value={searchLocation}
-                label="Find parking lots"
-                onChange={onChangeSearchLocation}
-            >{locationData.map((item ,index) =>
-                <MenuItem value={item} key={index}>{item}</MenuItem>)}
-            </Select>
+
             <Button variant="contained"
                     fullWidth
-                    onClick={findParkingLotByLocation}
+                    onClick={findParkingLotByLocationAndDate}
             >Search</Button>
           </FormControl>
 
@@ -423,7 +510,7 @@ const handleDateChange = (date) =>{
 
           <div align="right">
             <Button variant="contained"
-                    onClick={retrieveAllParkingLots}>GetAll</Button>
+                    onClick={retrieveAllParkingLots}>Today</Button>
           </div>
 
         </Form>
@@ -436,9 +523,7 @@ const handleDateChange = (date) =>{
               <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                   <TableRow>
-                    <TableCell>
-                      parkingLotId
-                    </TableCell>
+
                     <TableCell>
                       parkingLotName
                     </TableCell>
@@ -447,9 +532,6 @@ const handleDateChange = (date) =>{
                     </TableCell>
                     <TableCell>
                       AvailableSpaces
-                    </TableCell>
-                    <TableCell>
-                      Book
                     </TableCell>
 
                   </TableRow>
@@ -462,27 +544,15 @@ const handleDateChange = (date) =>{
                             hover
                             key={park.parkingLotId}
                         >
-                          <TableCell>
-                            {park.parkingLotId}
-                          </TableCell>
+
                           <TableCell>
                             {park.parkingLotName}
                           </TableCell>
                           <TableCell>
-                            {park.totalParkingSpaces}
+                            {park.totalCapacity}
                           </TableCell>
                           <TableCell>
                             {park.availableSpace}
-                          </TableCell>
-
-                          <TableCell>
-
-                          </TableCell>
-
-
-
-                          <TableCell>
-                            <Button>Book</Button>
                           </TableCell>
                         </TableRow>
                     ))}

@@ -4,7 +4,7 @@ const getAll = () => {
     return http.get("/apiv1/parkanddate/all");
 };
 
-const get = date => {
+const getByDateOnly = date => {
     return http.get(`/apiv1/parkanddate/get/${date}`);
 };
 
@@ -16,11 +16,16 @@ const getParkingData = locationName => {
     return http.get(`/apiv1/parkanddate/getByLocation/${locationName}`);
 };
 
+///get/bylocanddate
+const getParkingDataSearch = data => {
+    return http.post("/apiv1/parkanddate/get/bylocanddate", data);
+};
 
 
 export default {
     getAll,
-    get,
+    getByDateOnly,
     addDateToParkingLot,
     getParkingData,
+    getParkingDataSearch,
 };
