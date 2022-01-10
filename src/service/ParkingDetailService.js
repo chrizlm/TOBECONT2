@@ -12,6 +12,10 @@ const create = data => {
     return http.post("/apiv1/parkingdetails/save", data);
 };
 
+const checkBookingSpace = data =>{
+    return http.post("/apiv1/parkingdetails/checkSpace",data);
+}
+
 const updateAlt = (id, data) => {
     return http.put(`/apiv1/parkingdetails/update/${id}`, data);
 };
@@ -41,4 +45,5 @@ export default {
     update,
     remove,
     removeAll,
+    checkBookingSpace,
 };

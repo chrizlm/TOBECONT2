@@ -12,6 +12,9 @@ const addDateToParkingLot = data => {
     return http.post("/apiv1/parkanddate/dates/addtoparklot", data);
 };
 
+const getParkingData = locationName => {
+    return http.get(`/apiv1/parkanddate/getByLocation/${locationName}`);
+};
 
 
 
@@ -19,4 +22,5 @@ export default {
     getAll,
     get,
     addDateToParkingLot,
+    getParkingData,
 };
