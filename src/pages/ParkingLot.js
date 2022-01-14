@@ -52,7 +52,7 @@ const initialFieldValues = {
     parkingLotLocation: "",
     parkingLotName: "",
     totalParkingSpaces: 0,
-    parkingLotDate: "",
+   // parkingLotDate: "",
 
 };
 
@@ -90,7 +90,7 @@ export default function ParkingLot(props) {
             parkingLotLocation: parkDetail.parkingLotLocation,
             parkingLotName: parkDetail.parkingLotName,
             totalParkingSpaces: parkDetail.totalParkingSpaces,
-            parkingLotDate: parkDetail.parkingLotDate,
+            //parkingLotDate: parkDetail.parkingLotDate,
         };
         ParkingLotService.create(data).then(response => {
             console.log(response)
@@ -215,23 +215,7 @@ export default function ParkingLot(props) {
                                     onChange={handleInputChange}
                                 />
 
-                                <LocalizationProvider dateAdapter={AdapterDateFns}>
-                                    <DatePicker
-                                        label="Basic example"
-                                        value={value}
-                                        onChange={(date) => {
-                                            setValue(date);
 
-                                            setParkDetail({
-                                                ...parkDetail,
-                                                parkingLotDate : date,
-                                            })
-                                        }}
-                                        renderInput={(params) => <TextField {...params}
-                                                                            name="parkingDate" value={parkDetail.parkingLotDate}
-                                        />}
-                                    />
-                                </LocalizationProvider>
 
                             </Grid>
 
@@ -308,3 +292,22 @@ export default function ParkingLot(props) {
 
 
 
+/*
+<LocalizationProvider dateAdapter={AdapterDateFns}>
+                                    <DatePicker
+                                        label="Basic example"
+                                        value={value}
+                                        onChange={(date) => {
+                                            setValue(date);
+
+                                            setParkDetail({
+                                                ...parkDetail,
+                                                parkingLotDate : date,
+                                            })
+                                        }}
+                                        renderInput={(params) => <TextField {...params}
+                                                                            name="parkingDate" value={parkDetail.parkingLotDate}
+                                        />}
+                                    />
+                                </LocalizationProvider>
+ */

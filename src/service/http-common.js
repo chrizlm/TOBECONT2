@@ -12,4 +12,6 @@ export default axios.create({
         // 'Access-Control-Allow-Credentials': 'true',
 
     }
+
 });
+

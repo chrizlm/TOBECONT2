@@ -40,6 +40,12 @@ export const AttendantSideMenu = [
         path: '/bookingDetails',
         icon: <AiIcons.AiOutlineBook />,
         className: 'nav-text'
+    },
+    {
+        title: 'Account',
+        path: '/accountAttendant',
+        icon: <AiIcons.AiOutlineBook />,
+        className: 'nav-text'
     }
 
 

@@ -64,5 +64,11 @@ export const AdminSideMenu = [
         path: '/bookingDetails',
         icon: <AiIcons.AiOutlineBook />,
         className: 'nav-text'
+    },
+    {
+        title: 'Account',
+        path: '/accountAdmin',
+        icon: <AiIcons.AiOutlineBook />,
+        className: 'nav-text'
     }
 ]

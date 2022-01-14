@@ -67,7 +67,7 @@ const useStyles = makeStyles({
 
 
 export default function Bookings(props) {
-  const [parkDetail, setParkDetail] = useState(initialFieldValues);
+      const [parkDetail, setParkDetail] = useState(initialFieldValues);
   const [searchParkDetails, setSearchParkDetails] = useState(initialSearchDetailsValues);
   const [selected, setSelected] = React.useState("");
   const [value, setValue] = React.useState(new Date());
@@ -77,6 +77,9 @@ export default function Bookings(props) {
   const [parkingLotData, setParkingLotData] = useState([]);
   const [searchParkingLot, setSearchParkingLot] = useState("");
   const [freeSpace, setFreeSpace] = useState(0);
+
+
+
 
 
   useEffect(() =>{
@@ -97,17 +100,17 @@ export default function Bookings(props) {
 
 
 
-  const getPkLotList = ({item}) => {
+  const getPkLotList = (item) => {
 
       if(item === searchParkingLot) {
-        DataService.getParkingData(item).then(response => {
-          setParkingLotData(response.data);
-          console.log(response);
-        }).catch(error => {
-          console.log(error)
-        })
-
+          DataService.getParkingData(item).then(response => {
+              setParkingLotData(response.data);
+              console.log(response);
+          }).catch(error => {
+              console.log(error)
+          })
       }
+
 
   };
 
@@ -166,8 +169,8 @@ export default function Bookings(props) {
         })
 
 
-        const searchParkingLot = e.target.value;
-        setSearchParkingLot(searchParkingLot);
+        //const searchParkingLot = e.target.value;
+        setSearchParkingLot(e.target.value);
 
     }
   const handleOptionTwo = e =>{
@@ -386,6 +389,7 @@ const handleDateChange = (date) =>{
 
 
         </Grid>
+
         <Grid item xs={6}>
 
 
@@ -448,19 +452,19 @@ const handleDateChange = (date) =>{
             }}
         >
 
-        <Form>
+        <Form onSubmit={findParkingLotByLocationAndDate}>
 
 
             <LocalizationProvider dateAdapter={AdapterDateFns}>
                 <DatePicker
-                    label="Basic example"
+                    label="Search Date"
                     value={value}
 
                     onChange={(date) => {
                         setValue(date);
 
                         setSearchParkDetails({
-                            ...parkDetail,
+                            ...searchParkDetails,
                             parkingDate : date,
                         })
                     }}
@@ -481,7 +485,7 @@ const handleDateChange = (date) =>{
                     onChange={handleOptionOneSearch}
                 >{locationData.map((item ,index) =>
                     <MenuItem value={item} key={index}
-                              onClick={getPkLotList({item})}>{item}</MenuItem>)}
+                              onClick={getPkLotList(item)}>{item}</MenuItem>)}
                 </Select>
             </FormControl>
             <FormControl>
@@ -514,6 +518,8 @@ const handleDateChange = (date) =>{
           </div>
 
         </Form>
+
+
 
         <Card {...props}>
     <CardHeader title="Parking lots" />

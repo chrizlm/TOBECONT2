@@ -18,6 +18,9 @@ import AppUserService, {login} from "../service/AppUserService";
 import ParkingLotService from "../service/ParkingLotService";
 import {Form, UseForm} from "../components/UseForm";
 import Controls from "../components/controls/Controls";
+import AccountSettingsAdmin from "./AccountSettingsAdmin";
+import AccountSettingsAttendant from "./AccountSettingsAttendant";
+import AccountSettingsMotorist from "./AccountSettingsMotorist";
 
 
 
@@ -115,12 +118,17 @@ export default function Home() {
 
             localStorage.setItem("user", JSON.stringify(response.data));
             //setTokenInfo(response.data);
-            const isAdmin = JSON.parse(atob(response.data.split('.')[1])).roles[0] === 'ROLE_MOTORIST';
+            const isAdmin = JSON.parse(atob(response.data.split('.')[1])).roles[0] === 'ROLE_ADMIN';
+            const isAttendant = JSON.parse(atob(response.data.split('.')[1])).roles[0] === 'ROLE_ATTENDANT';
+            const isMotorist = JSON.parse(atob(response.data.split('.')[1])).roles[0] === 'ROLE_MOTORIST';
+            const email = JSON.parse(atob(response.data.split('.')[1])).sub;
+            console.log(email);
+
             console.log(isAdmin);
             console.log(response);
             refreshPage();
 
-            window.location.reload(true);
+            //window.location.reload(true);
            const retrievedPerson = JSON.parse(localStorage.getItem('user'));
             console.log(retrievedPerson);
         })

@@ -40,5 +40,11 @@ export const SideMenu = [
         path: '/parkingLotsDetails',
         icon: <AiIcons.AiOutlineBook />,
         className: 'nav-text'
+    },
+    {
+        title: 'Account',
+        path: '/accountMotorist',
+        icon: <AiIcons.AiOutlineBook />,
+        className: 'nav-text'
     }
 ]

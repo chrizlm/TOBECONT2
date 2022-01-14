@@ -14,6 +14,10 @@ import AuthService from "../service/auth.service";
 import ParkingLotDetails from "./ParkingLotDetails";
 import AttendantPage from "./AttendantPage";
 import BookingDetails from "./BookingDetails";
+import AccountSettingsAdmin from "./AccountSettingsAdmin";
+import {MessagesSettings} from "./MessagesSettings";
+import AccountSettingsAttendant from "./AccountSettingsAttendant";
+import AccountSettingsMotorist from "./AccountSettingsMotorist";
 
 export default function MotoristPage() {
   const[isAutheticated, setisAutheticated] = useState(false);
@@ -34,6 +38,9 @@ export default function MotoristPage() {
           <Route exact path="/parkingLot" component={ParkingLot}></Route>
           <Route exact path="/parkingLotsDetails" component={ParkingLotDetails}></Route>
           <Route exact path="/attendantsList" component={AttendantPage}></Route>
+          <Route exact path="/accountAdmin" component={AccountSettingsAdmin}></Route>
+          <Route exact path="/accountAttendant" component={AccountSettingsAttendant}></Route>
+          <Route exact path="/accountMotorist" component={AccountSettingsMotorist}></Route>
         </Switch>
       </Router>
     </>

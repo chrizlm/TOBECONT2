@@ -8,6 +8,14 @@ update
 delete
 delete all
  */
+/** admin */
+const getAdmin = email =>{
+    return http.get(`/apiv1/admin/get/${email}`);
+}
+
+const changePassword = data =>{
+    return http.put("/apiv1/admin/updatePassword", data);
+}
 
 /** attendants */
 
@@ -74,6 +82,9 @@ const addRoleToUser = data =>{
 }
 
 export default {
+    changePassword,
+    getAdmin,
+
     registerAttendant,
     getAttendant,
     getAllAttendants,
