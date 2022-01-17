@@ -25,6 +25,8 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 import MailIcon from '@mui/icons-material/Mail';
+import Home from "../../pages/Home";
+import { useHistory } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -84,6 +86,8 @@ export default function SideNavBar() {
     const[adminPage, setAdminPage] = useState(false);
     const [currentUser, setCurrentUser] = useState(undefined);
 
+    const history = useHistory();
+
 
     useEffect(() =>{
         const user = AuthService.getCurrentUser();
@@ -105,10 +109,11 @@ export default function SideNavBar() {
     }
 
     const logout = () =>{
-
+        setOpen(false);
         setIsAuthenticated(false);
         console.log("loggedInUser:" + isAuthenticated);
-
+        history.push("./");
+        window.location.reload(true);
         AuthService.logout();
     }
     const handleClick = (event) => {

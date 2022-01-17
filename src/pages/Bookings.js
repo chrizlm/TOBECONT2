@@ -36,6 +36,7 @@ import ParkingDetailService from "../service/ParkingDetailService";
 import DataService from "../service/DataService";
 import moment from "moment";
 import ParkingLotsWithDatesService from "../service/ParkingLotsWithDatesService";
+import AuthService from "../service/auth.service";
 
 const useStyles = makeStyles({
   pageContent: {
@@ -202,6 +203,8 @@ const handleDateChange = (date) =>{
   const saveParkingDetail = () =>{
     const submittedDate = moment(parkDetail.parkingDate).format('YYYY-MM-DD')
     const submittedTime = moment(parkDetail.parkTime).format('HH:mm')
+      const user = AuthService.getCurrentUser();
+      const motoristEmail = JSON.parse(atob(user.split('.')[1])).sub;
     const data ={
       numberPlate: parkDetail.numberPlate,
       vehicleType: parkDetail.vehicleType,
@@ -217,7 +220,7 @@ const handleDateChange = (date) =>{
       setFreeSpace(response.data);
 
       if(response.data >= 0){
-        ParkingDetailService.create(data).then(response => {
+        ParkingDetailService.create(data, motoristEmail).then(response => {
           console.log(response)
         })
             .catch(error => {

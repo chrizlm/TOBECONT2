@@ -10,6 +10,7 @@ export default axios.create({
         "Content-Type": "application/json",
         //"Content-Type": "application/x-www-form-urlencoded",
         // 'Access-Control-Allow-Credentials': 'true',
+        'Authorization': 'Bearer ' + JSON.parse(localStorage.getItem('user')),
 
     }
 

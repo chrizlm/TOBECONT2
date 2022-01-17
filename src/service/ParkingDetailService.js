@@ -8,8 +8,9 @@ const get = numberPlate => {
     return http.get(`/apiv1/parkingdetails/get/${numberPlate}`);
 };
 
-const create = data => {
-    return http.post("/apiv1/parkingdetails/save", data);
+
+const create = (data, motoristEmail) => {
+    return http.post(`/apiv1/parkingdetails/save/${motoristEmail}`, data);
 };
 
 const checkBookingSpace = data =>{

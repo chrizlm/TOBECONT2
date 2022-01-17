@@ -21,6 +21,8 @@ import Controls from "../components/controls/Controls";
 import AccountSettingsAdmin from "./AccountSettingsAdmin";
 import AccountSettingsAttendant from "./AccountSettingsAttendant";
 import AccountSettingsMotorist from "./AccountSettingsMotorist";
+import { useHistory } from "react-router-dom";
+import About from "./About";
 
 
 
@@ -53,7 +55,7 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(-1);
 
-
+    const history = useHistory();
   /*
   const [tokenInfo , setTokenInfo] = useState(tokenValues);
 
@@ -103,6 +105,7 @@ export default function Home() {
         event.preventDefault();
          alert("logins submitted");
 
+
         const data = {
           username: loginDetail.username,
           password: loginDetail.password,
@@ -110,11 +113,12 @@ export default function Home() {
 
         AppUserService.login(data).then(response => {
            /*if(response.data){
-                localStorage.setItem("user", JSON.stringify(response.data));
+                //localStorage.setItem("user", JSON.stringify(response.data));
             }
             return response.data;
 
             */
+
 
             localStorage.setItem("user", JSON.stringify(response.data));
             //setTokenInfo(response.data);
@@ -127,14 +131,16 @@ export default function Home() {
             console.log(isAdmin);
             console.log(response);
             refreshPage();
-
-            //window.location.reload(true);
+            history.push("./About");
+            window.location.reload(true);
            const retrievedPerson = JSON.parse(localStorage.getItem('user'));
             console.log(retrievedPerson);
         })
             .catch(error => {
                 console.log(error)
             });
+
+
       };
 
     const logout = () => {
